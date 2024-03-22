@@ -63,6 +63,7 @@ badusb.quit();
         const args = parts.slice(1).join(' ');
         if (command in command_mapping) {
             if (command === "DELAY") {
+                console.log("In the condition bitch");
                 const js_command = command_mapping[command].replace("{}", args);
                 jsCode += `\t${js_command}\n`;
             }else{
