@@ -62,11 +62,13 @@ badusb.quit();
         const command = parts[0];
         const args = parts.slice(1).join(' ');
         if (command in command_mapping) {
-            if (command == "DELAY": "delay({});") {
-                const js_command = command_mapping[command].replace("{}", `"${args.replace(/\\/g, '\\\\')
+            if (command == "delay({});") {
+                const js_command = command_mapping[command].replace("{}", args);
+                jsCode += `\t${js_command}\n`;
+            }else{
+                const js_command = command_mapping[command].replace("{}", `"${args.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`);
+                jsCode += `\t${js_command}\n`;
             }
-            const js_command = command_mapping[command].replace("{}", `"${args.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`);
-            jsCode += `\t${js_command}\n`;
         } else {
             console.warn(`Warning: Unsupported DuckyScript command '${command}'`);
         }
