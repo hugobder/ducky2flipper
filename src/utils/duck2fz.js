@@ -28,10 +28,10 @@ for (let i = 1; i < 13; i++) {
 
 export function translate_duckyscript_to_js(input_file) {
     let scriptBase = (jsCode) => (`/* Flipper Zero JavaScript BadUSB */
-const badusb = require('badusb');
-const notify = require('notification');
-const flipper = require('flipper');
-const dialog = require('dialog');
+let badusb = require('badusb');
+let notify = require('notification');
+let flipper = require('flipper');
+let dialog = require('dialog');
 
 badusb.setup({ vid: 0xAAAA, pid: 0xBBBB, mfr_name: 'Flipper', prod_name: 'Zero' });
 
@@ -47,7 +47,7 @@ if (badusb.isConnected()) {
     notify.error();
 }
 
-// Opcional, pero permite intercambiar con usbdisk
+// Optional, but allows exchange with usbdisk
 badusb.quit();
     `);
     let jsCode = '';
@@ -62,6 +62,9 @@ badusb.quit();
         const command = parts[0];
         const args = parts.slice(1).join(' ');
         if (command in command_mapping) {
+            if (command == "DELAY": "delay({});") {
+                const js_command = command_mapping[command].replace("{}", `"${args.replace(/\\/g, '\\\\')
+            }
             const js_command = command_mapping[command].replace("{}", `"${args.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`);
             jsCode += `\t${js_command}\n`;
         } else {
