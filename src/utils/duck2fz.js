@@ -62,7 +62,7 @@ badusb.quit();
         const command = parts[0];
         const args = parts.slice(1).join(' ');
         if (command in command_mapping) {
-            if (command == "delay({});") {
+            if (command == "DELAY") {
                 const js_command = command_mapping[command].replace("{}", args);
                 jsCode += `\t${js_command}\n`;
             }else{
